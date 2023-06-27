@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Mosaic Generator</title>
+    <script>
+        async function uploadImage() {
+            const fileInput = document.getElementById('fileInput');
+            const textPromptInput = document.getElementById('textPromptInput');
+            const cellSizeInput = document.getElementById('cellSizeInput');
+            const modelChoiceInput = document.querySelector('input[name="modelChoice"]:checked');
+
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            formData.append('text_prompt', textPromptInput.value);
+            formData.append('cell_size', cellSizeInput.value);
+            formData.append('model_choice', modelChoiceInput.value);
+
+            const response = await fetch('/upload', {
+                method: 'POST',
+                body: formData
+            });
+            const blob = await response.blob();
+
+            if (blob) {
+                const img = document.getElementById('outputImage');
+                img.src = URL.createObjectURL(blob);
+                img.style.display = 'block';
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Image Mosaic Generator</h1>
+    <input type="file" id="fileInput"><br>
+    <label for="textPromptInput">Enter a text prompt:</label>
+    <input type="text" id="textPromptInput"><br>
+    <label for="cellSizeInput">Enter the cell size:</label>
+    <input type="number" id="cellSizeInput" min="1" value="50"><br>
+    <label>Choose model:</label>
+    <input type="radio" id="knn" name="modelChoice" value="knn" checked>
+    <label for="knn">kNN```html
+</label>
+    <input type="radio" id="cnn" name="modelChoice" value="cnn">
+    <label for="cnn">CNN</label><br>
+    <button onclick="uploadImage()">Generate Mosaic</button>
+    <img id="outputImage" style="display:none" alt="Generated Mosaic">
+</body>
+</html>
