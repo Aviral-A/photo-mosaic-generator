@@ -7,4 +7,4 @@ This project is a photo mosaic generator. A photo mosaic refers to a photo which
 
 Instructions:
 
-In order to start the server, clone the repository to your local, install the required packages, and run app.py. Then, connect to http://127.0.0.1:8000 on your local browser to access the app. 
+In order to start the server, clone the repository to your local, install the required packages through requirements.txt, and run app.py (uvicorn app:app --host 0.0.0.0 Then, connect to http://127.0.0.1:8000 on your local browser to access the app. 
